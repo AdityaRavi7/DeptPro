@@ -52,18 +52,30 @@
   color: rgba(255, 255, 255, 0.87);
 }
 
+.container2{
+  margin-top: 2rem;
+  margin-left: 5rem;
+}
+
 .card{
-  background-color: rgba(34, 38, 47, 255);  ;
-  border: 3px solid #ddd;
-  border-radius: 1rem;
+  background-color: #4d008f  ;
+   /* border: 3px solid #ddd;  */
+  /* border-radius: 1rem; */
   margin-bottom: 2.5rem;
   margin-right: 2.5rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
   width: 20rem;
-  height: 8rem;
 }
 
 
-
+.card:hover {
+  filter: drop-shadow(0 0 2em #ffff);
+  cursor: pointer;
+}
+.generate{
+  margin-left: 2rem;
+}
 
 
 

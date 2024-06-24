@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../src/App.css'; // Assuming you have a CSS file for styling
 
 function Sequence1() {
   const location = useLocation();
-  const { title } = location.state || { title: 'Default Title' };
+  const { title } = location.state || { title: 'Sequence Page' };
 
   const [start, setStart] = useState(0);
   const [duration1, setDuration1] = useState(0);
@@ -13,9 +12,12 @@ function Sequence1() {
   const [delay2, setDelay2] = useState(0);
 
   const handleSave = () => {
-    const data = { start, duration1, delay1, duration2, delay2 };
-    console.log('Data saved:', data);
-    // Add logic to save the data
+    const data = `${start}\n${duration1}\n${delay1}\n${duration2}\n${delay2}`;
+    const blob = new Blob([data], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${title.replace(/\s+/g, '_')}_parameters.txt`;
+    link.click();
   };
 
   return (
@@ -26,7 +28,7 @@ function Sequence1() {
         <input
           type="range"
           min="0"
-          max="100"
+          max="50"
           value={start}
           onChange={(e) => setStart(Number(e.target.value))}
         />
@@ -37,7 +39,7 @@ function Sequence1() {
         <input
           type="range"
           min="0"
-          max="100"
+          max="50"
           value={duration1}
           onChange={(e) => setDuration1(Number(e.target.value))}
         />
@@ -48,7 +50,7 @@ function Sequence1() {
         <input
           type="range"
           min="0"
-          max="100"
+          max="50"
           value={delay1}
           onChange={(e) => setDelay1(Number(e.target.value))}
         />
@@ -59,7 +61,7 @@ function Sequence1() {
         <input
           type="range"
           min="0"
-          max="100"
+          max="50"
           value={duration2}
           onChange={(e) => setDuration2(Number(e.target.value))}
         />
@@ -70,7 +72,7 @@ function Sequence1() {
         <input
           type="range"
           min="0"
-          max="100"
+          max="50"
           value={delay2}
           onChange={(e) => setDelay2(Number(e.target.value))}
         />
