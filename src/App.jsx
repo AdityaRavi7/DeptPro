@@ -1,6 +1,5 @@
 
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import rvce from './assets/rvce-logo.jpg';
 import Card from '../components/cards';
@@ -11,6 +10,8 @@ import Sequence2 from '../components/sequence2';
 import Time from '../components/time';
 import ProfileSelection from '../components/profileselection';
 import { ProfileProvider } from '../components/profilecontext';
+import db from './firebase.js';
+import { onSnapshot, collection} from 'firebase/firestore';
 import './App.css';
 
 function Home() {
