@@ -15,12 +15,14 @@ function MotorSeq() {
   useEffect(() => {
     const fetchSequenceData = async () => {
       if (selectedProfile) {
-        const sequenceRef = ref(database, `sequences/${selectedProfile.id}_${title}`);
-        const sequenceSnap = await get(sequenceRef);
-        if (sequenceSnap.exists()) {
-          const data = sequenceSnap.val();
-          setNumSequences(data.numSequences);
-          setSequences(data.sequences);
+        // Use the dynamic key to fetch the data
+        const motorKey = `${selectedProfile.id}_${title}`;
+        const currentRef = ref(database, `CURRENT/${motorKey}`);
+        const currentSnap = await get(currentRef);
+        if (currentSnap.exists()) {
+          const data = currentSnap.val();
+          setNumSequences(data.numSequences || 0);
+          setSequences(data.sequences || []);
         }
       }
     };
@@ -75,6 +77,27 @@ function MotorSeq() {
     }
   };
 
+  // Modified function to push data directly to 'CURRENT'
+  const handlePushToBoard = async () => {
+    if (selectedProfile) {
+        // Create a dynamic key using profile ID and motor identifier (e.g., Motor2)
+        const motorKey = `MOTOR`;
+        
+        // Reference to the CURRENT path with the dynamic key
+        const currentRef = ref(database, `CURRENT/MOTOR`);
+        
+        // Save the current data to the dynamically created path
+        await set(currentRef, {
+            numSequences: numSequences,
+            sequences: sequences
+        });
+
+        alert('Data pushed to the board successfully and overwritten.');
+    } else {
+        alert('Please select a profile first.');
+    }
+  };
+
   return (
     <div className='motorseq'>
       <h1>{title}</h1>
@@ -109,9 +132,10 @@ function MotorSeq() {
         ))}
       </div>
       <button onClick={handleSave}>Save All Sequences</button>
+      {/* Modified button to push to the board */}
+      <button onClick={handlePushToBoard}>PUSH TO BOARD</button>
     </div>
   );
 }
 
 export default MotorSeq;
-
