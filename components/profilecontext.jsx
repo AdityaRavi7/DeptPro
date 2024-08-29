@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
-import db from '../src/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { ref, get } from 'firebase/database';
+import database from '../src/firebase';
 
 const ProfileContext = createContext();
 
@@ -8,14 +8,14 @@ export const ProfileProvider = ({ children }) => {
   const [selectedProfile, setSelectedProfile] = useState(null);
 
   useEffect(() => {
-    // Fetch the selected profile from Firestore if you have a way to identify it
+    // Fetch the selected profile from Realtime Database
     const fetchSelectedProfile = async () => {
-      // Replace 'selectedProfileId' with logic to retrieve the correct document ID
       const selectedProfileId = localStorage.getItem('selectedProfileId');
       if (selectedProfileId) {
-        const profileDoc = await getDoc(doc(db, 'profiles', selectedProfileId));
-        if (profileDoc.exists()) {
-          setSelectedProfile({ id: profileDoc.id, ...profileDoc.data() });
+        const profileRef = ref(database, `profiles/${selectedProfileId}`);
+        const profileSnap = await get(profileRef);
+        if (profileSnap.exists()) {
+          setSelectedProfile({ id: selectedProfileId, ...profileSnap.val() });
         }
       }
     };
@@ -42,4 +42,3 @@ export const ProfileProvider = ({ children }) => {
 };
 
 export default ProfileContext;
-

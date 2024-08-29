@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ref, get, push, remove, onValue } from 'firebase/database';
 import ProfileContext from './profilecontext';
-import db from '../src/firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import database from '../src/firebase';
 
 function ProfileSelection() {
   const [profiles, setProfiles] = useState([]);
@@ -12,9 +12,12 @@ function ProfileSelection() {
 
   useEffect(() => {
     const fetchProfiles = async () => {
-      const querySnapshot = await getDocs(collection(db, 'profiles'));
-      const profilesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setProfiles(profilesData);
+      const profilesRef = ref(database, 'profiles');
+      onValue(profilesRef, (snapshot) => {
+        const profilesData = snapshot.val();
+        const profilesList = profilesData ? Object.keys(profilesData).map(key => ({ id: key, ...profilesData[key] })) : [];
+        setProfiles(profilesList);
+      });
     };
 
     fetchProfiles();
@@ -23,11 +26,12 @@ function ProfileSelection() {
   const handleCreateProfile = async () => {
     if (newProfileName) {
       try {
-        const docRef = await addDoc(collection(db, 'profiles'), { name: newProfileName });
-        setProfiles([...profiles, { id: docRef.id, name: newProfileName }]);
+        const profilesRef = ref(database, 'profiles');
+        const newProfileRef = await push(profilesRef, { name: newProfileName });
+        setProfiles([...profiles, { id: newProfileRef.key, name: newProfileName }]);
         setNewProfileName('');
       } catch (e) {
-        console.error("Error adding document: ", e);
+        console.error("Error adding profile: ", e);
       }
     }
   };
@@ -39,10 +43,11 @@ function ProfileSelection() {
 
   const handleDeleteProfile = async (profile) => {
     try {
-      await deleteDoc(doc(db, 'profiles', profile.id));
+      const profileRef = ref(database, `profiles/${profile.id}`);
+      await remove(profileRef);
       setProfiles(profiles.filter(p => p.id !== profile.id));
     } catch (e) {
-      console.error("Error deleting document: ", e);
+      console.error("Error deleting profile: ", e);
     }
   };
 

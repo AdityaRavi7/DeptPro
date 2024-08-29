@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { ref, set, get } from 'firebase/database';
+import database from '../src/firebase';
 
 function Sequence1() {
   const location = useLocation();
@@ -11,13 +13,43 @@ function Sequence1() {
   const [duration2, setDuration2] = useState(0);
   const [delay2, setDelay2] = useState(0);
 
-  const handleSave = () => {
-    const data = `${start}\n${duration1}\n${delay1}\n${duration2}\n${delay2}`;
-    const blob = new Blob([data], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `${title.replace(/\s+/g, '_')}_parameters.txt`;
-    link.click();
+  useEffect(() => {
+    const fetchSequenceData = async () => {
+      const sequenceRef = ref(database, `sequences/${title}`);
+      const snapshot = await get(sequenceRef);
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        setStart(data.start || 0);
+        setDuration1(data.duration1 || 0);
+        setDelay1(data.delay1 || 0);
+        setDuration2(data.duration2 || 0);
+        setDelay2(data.delay2 || 0);
+      }
+    };
+
+    fetchSequenceData();
+  }, [title]);
+
+  const handleSave = async () => {
+    const data = { start, duration1, delay1, duration2, delay2 };
+    const sequenceRef = ref(database, `sequences/${title}`);
+    try {
+      await set(sequenceRef, data);
+
+      // Construct file content
+      const fileData = `${start}\n${duration1}\n${delay1}\n${duration2}\n${delay2}`;
+      
+      // Create blob and trigger download
+      const blob = new Blob([fileData], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${title.replace(/\s+/g, '_')}_parameters.txt`;
+      link.click();
+
+      alert('Data saved successfully.');
+    } catch (e) {
+      console.error("Error saving data: ", e);
+    }
   };
 
   return (

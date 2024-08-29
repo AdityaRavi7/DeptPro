@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import ProfileContext from './profilecontext';
-import db from '../src/firebase';
+import database from '../src/firebase';
+import { ref, set, get } from 'firebase/database';
 
 function Time() {
   const { selectedProfile } = useContext(ProfileContext);
   const [sequenceCount, setSequenceCount] = useState(0);
   const [timeSequences, setTimeSequences] = useState([]);
   const [isSequenceInputVisible, setSequenceInputVisible] = useState(false);
-
+  
   useEffect(() => {
     const fetchTimeData = async () => {
       if (selectedProfile) {
-        const timeDoc = await getDoc(doc(db, 'timeSequences', selectedProfile.id));
-        if (timeDoc.exists()) {
-          const data = timeDoc.data();
+        const timeRef = ref(database, `timeSequences/${selectedProfile.id}`);
+        const snapshot = await get(timeRef);
+        if (snapshot.exists()) {
+          const data = snapshot.val();
           setSequenceCount(data.sequenceCount);
           setTimeSequences(data.timeSequences);
           setSequenceInputVisible(true);
@@ -46,21 +47,29 @@ function Time() {
   const handleSave = async () => {
     if (selectedProfile) {
       const data = { sequenceCount, timeSequences };
-      await setDoc(doc(db, 'timeSequences', selectedProfile.id), data);
+      const timeRef = ref(database, `timeSequences/${selectedProfile.id}`);
+      try {
+        await set(timeRef, data);
 
-      let fileData = `${sequenceCount}\n`;
-      fileData += timeSequences
-        .map(sequence => `${sequence.hours}\n${sequence.minutes}`)
-        .join('\n');
+        // Construct file content
+        let fileData = `${sequenceCount}\n`;
+        fileData += timeSequences
+          .map(sequence => `${sequence.hours}\n${sequence.minutes}`)
+          .join('\n');
 
-      const blob = new Blob([fileData], { type: 'text/plain;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${selectedProfile.id}}_sequences.txt`;
-      document.body.appendChild(link); // Append to body
-      link.click();
-      document.body.removeChild(link); // Remove from body      
-      alert('Time sequences saved and file downloaded successfully.');
+        // Create blob and trigger download
+        const blob = new Blob([fileData], { type: 'text/plain;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${selectedProfile.id}_sequences.txt`;
+        document.body.appendChild(link); // Append to body
+        link.click();
+        document.body.removeChild(link); // Remove from body
+
+        alert('Time sequences saved and file downloaded successfully.');
+      } catch (e) {
+        console.error("Error saving data: ", e);
+      }
     } else {
       alert('Please select a profile first.');
     }
