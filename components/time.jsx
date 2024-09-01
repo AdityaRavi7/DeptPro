@@ -75,6 +75,22 @@ function Time() {
     }
   };
 
+  const handlePushToBoard = async () => {
+    // Reference to the CURRENT/time path
+    const currentTimeRef = ref(database, `CURRENT/time`);
+    try {
+      // Overwrite any existing time sequences with the new data
+      await set(currentTimeRef, {
+        sequenceCount: sequenceCount,
+        timeSequences: timeSequences
+      });
+      alert('Time sequences pushed to the board successfully, overwriting any existing sequences.');
+    } catch (e) {
+      console.error("Error pushing data to the board: ", e);
+      alert('Failed to push data to the board.');
+    }
+  };
+
   const handleNext = () => {
     setSequenceInputVisible(true);
   };
@@ -127,6 +143,7 @@ function Time() {
                 </div>
               ))}
               <button onClick={handleSave}>Save</button>
+              <button onClick={handlePushToBoard}>Push to Board</button>
             </div>
           )}
         </div>

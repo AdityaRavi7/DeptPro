@@ -35,13 +35,14 @@ function MotorSeq() {
   const handleGenerateSequences = () => {
     const newSequences = Array.from({ length: numSequences }, () => ({
       delay: 0,
+      occurrences: 1 // Initialize with 1 occurrence by default
     }));
     setSequences(newSequences);
   };
 
-  const handleSequenceChange = (index, value) => {
+  const handleSequenceChange = (index, field, value) => {
     const newSequences = [...sequences];
-    newSequences[index] = { ...newSequences[index], delay: Number(value) };
+    newSequences[index] = { ...newSequences[index], [field]: Number(value) };
     setSequences(newSequences);
   };
 
@@ -53,7 +54,7 @@ function MotorSeq() {
 
       // Construct file content
       const fileData = `${numSequences}\n` + sequences
-        .map(seq => `${seq.delay}`)
+        .map(seq => `${seq.delay} ${seq.occurrences}`)
         .join('\n');
 
       // Create blob and trigger download
@@ -114,17 +115,30 @@ function MotorSeq() {
                 min="0"
                 max="10000"
                 value={sequence.delay}
-                onChange={(e) => handleSequenceChange(index, e.target.value)}
+                onChange={(e) => handleSequenceChange(index, 'delay', e.target.value)}
               />
               <input
                 type="number"
                 min="0"
                 max="10000"
                 value={sequence.delay}
-                onChange={(e) => handleSequenceChange(index, e.target.value)}
+                onChange={(e) => handleSequenceChange(index, 'delay', e.target.value)}
                 style={{ marginLeft: '10px', width: '100px' }}
               />
               <span style={{ marginLeft: '10px' }}>{sequence.delay} ms</span>
+            </div>
+            <div className="control">
+              <label htmlFor={`occurrences-${index}`}>Occurrences</label>
+              <input
+                type="number"
+                id={`occurrences-${index}`}
+                min="1"
+                max="100"
+                value={sequence.occurrences}
+                onChange={(e) => handleSequenceChange(index, 'occurrences', e.target.value)}
+                style={{ marginLeft: '10px', width: '100px' }}
+              />
+              <span style={{ marginLeft: '10px' }}>{sequence.occurrences} times</span>
             </div>
           </div>
         ))}
