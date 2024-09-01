@@ -5,13 +5,14 @@ import { getDatabase } from "firebase/database"; // Import Realtime Database
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDHydW436ORjWzXcCYB3EbSHe5ulK1UOkk",
-  authDomain: "dept-proj-27db6.firebaseapp.com",
-  databaseURL: "https://dept-proj-27db6-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "dept-proj-27db6",
-  storageBucket: "dept-proj-27db6.appspot.com",
-  messagingSenderId: "467143556970",
-  appId: "1:467143556970:web:8cef82acf069c452d86f13"
+  apiKey: "AIzaSyAK7TwHneNlio4P98rTKKGG-EoUs9-uNhA",
+  authDomain: "dynamic-9f384.firebaseapp.com",
+  databaseURL: "https://dynamic-9f384-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "dynamic-9f384",
+  storageBucket: "dynamic-9f384.appspot.com",
+  messagingSenderId: "169701097124",
+  appId: "1:169701097124:web:f12badf13870dff939f031",
+  measurementId: "G-HS6LR9VE6B"
 };
 
 // Initialize Firebase
