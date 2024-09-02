@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ref, get, push, remove, onValue } from 'firebase/database';
 import ProfileContext from './profilecontext';
+import "./../src/App.css"
 import database from '../src/firebase';
 
 function ProfileSelection() {

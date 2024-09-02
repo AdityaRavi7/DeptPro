@@ -96,7 +96,7 @@ function Time() {
   };
 
   return (
-    <div className="App">
+    <div className="timeseq">
       <header className="App-header">
         <h1>Time Input Sequences App</h1>
         <div className="input-container">

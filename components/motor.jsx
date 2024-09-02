@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ref, get, set } from 'firebase/database'; // Import Realtime Database functions
 import Card from './cards';
 import ProfileContext from './profilecontext';
+import "./../src/App.css"
 import database from '../src/firebase';
 
 function Motor() {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ref, get, set } from 'firebase/database'; // Import Realtime Database functions
 import ProfileContext from './profilecontext';
+import "./../src/App.css"
 import database from '../src/firebase';
 
 function MotorSeq() {

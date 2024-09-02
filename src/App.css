@@ -78,8 +78,197 @@
 }
 
 
+.motor-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  gap: 2rem; /* Space between the cards */
+  margin-top: 2rem; /* Space above the card grid */
+  padding: 1rem; /* Padding around the grid */
+}
 
 
 
+.motorseq {
+  max-width: 800px; /* Ensures a maximum width for better readability */
+  margin: 0 auto;   /* Centers the container */
+  padding: 2rem;    /* Adds space inside the container */
+}
+
+.motorseq h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem; /* Adds space below the heading */
+  color: #fff;           /* Retains dark text color for the heading */
+}
+
+.motorseq div {
+  margin-bottom: 1.5rem; /* Adds space between each section/block */
+}
+
+.motorseq label {
+  margin-right: 10px; /* Space between label and input */
+  color: #fff;        /* Retains color for labels */
+}
+
+.motorseq input[type="number"] {
+  padding: 0.5rem;
+  margin-left: 10px; /* Space between number input and adjacent elements */
+}
+
+.motorseq button {
+  margin-right: 1rem; /* Space between buttons */
+  margin-top: 1rem;   /* Space above the buttons */
+  padding: 0.5rem 1rem; /* Increases button padding for a better click area */
+  background-color: #4d008f; /* Retains the button color */
+  color: #fff; /* Keeps the text color white */
+  border: none; /* No border for a clean look */
+  border-radius: 5px; /* Rounded corners for buttons */
+}
+
+.timeseq button {
+  margin-right: 1rem; /* Space between buttons */
+  margin-top: 1rem;   /* Space above the buttons */
+  padding: 0.5rem 1rem; /* Increases button padding for a better click area */
+  background-color: #4d008f; /* Retains the button color */
+  color: #fff; /* Keeps the text color white */
+  border: none; /* No border for a clean look */
+  border-radius: 5px; /* Rounded corners for buttons */
+}
+
+.sequences {
+  margin-top: 2rem; /* Space between the "Generate" section and the sequences list */
+}
+
+.sequence {
+  margin-bottom: 1.5rem; /* Space between each sequence block */
+  padding: 1rem;         /* Space inside each sequence block */
+  border: 1px solid #ddd; /* Optional: Light border to distinguish sequence blocks */
+  border-radius: 5px;    /* Rounded corners for sequence blocks */
+  background-color: rgba(246, 247, 249, 0.1); /* Retains background color for sequence blocks */
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* Space between control elements */
+}
+
+.control input[type="range"],
+.control input[type="number"] {
+  margin-left: 1rem; /* Space between input fields and their labels */
+}
+
+.control span {
+  margin-left: 10px; /* Space between numeric input and displayed value */
+  color: #fff;       /* Retains text color for span elements */
+}
 
 
+
+.timeseq {
+  max-width: 800px; /* Ensures a maximum width for better readability */
+  margin: 0 auto;   /* Centers the container */
+  padding: 2rem;    /* Adds space inside the container */
+}
+
+.timeseq h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem; /* Adds space below the heading */
+  color: #fff;           /* Retains dark text color for the heading */
+}
+
+.timeseq .input-container {
+  margin-bottom: 2rem; /* Adds space below the input container */
+}
+
+.timeseq label {
+  margin-right: 10px; /* Space between label and input */
+  color: #fff;        /* Retains color for labels */
+}
+
+.timeseq input[type="number"] {
+  padding: 0.5rem;
+  margin-left: 10px; /* Space between number input and adjacent elements */
+}
+
+.timeseq button {
+  margin-right: 1rem; /* Space between buttons */
+  margin-top: 1rem;   /* Space above the buttons */
+  padding: 0.5rem 1rem; /* Increases button padding for a better click area */
+  background-color: #4d008f; /* Retains the button color */
+  color: #fff; /* Keeps the text color white */
+  border: none; /* No border for a clean look */
+  border-radius: 5px; /* Rounded corners for buttons */
+}
+
+.timeseq h3 {
+  margin-bottom: 1rem; /* Adds space below each time section heading */
+  color: #fff;         /* Retains dark text color for headings */
+}
+
+.timeseq > div > div {
+  margin-bottom: 1.5rem; /* Space between each sequence block */
+  padding: 1rem;         /* Space inside each sequence block */
+  border: 1px solid #ddd; /* Optional: Light border to distinguish sequence blocks */
+  border-radius: 5px;    /* Rounded corners for sequence blocks */
+  background-color: rgba(246, 247, 249, 0.1); /* Retains background color for sequence blocks */
+}
+
+.timeseq input[type="number"] {
+  margin-left: 1rem; /* Space between input fields and their labels */
+}
+.profile-selection {
+  max-width: 800px; /* Sets a maximum width for the container */
+  margin: 0 auto;   /* Centers the container */
+  padding: 2rem;    /* Adds space inside the container */
+  text-align: center; /* Centers text inside the container */
+}
+
+.profile-selection h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem; /* Adds space below the heading */
+  color: #fff;         /* Retains dark text color for the heading */
+}
+
+.profile-selection .input-container {
+  display: flex; /* Use flexbox to align items in a row */
+  justify-content: center; /* Center align items horizontally */
+  margin-bottom: 2rem; /* Adds space below the input-container */
+}
+
+.profile-selection input[type="text"] {
+  padding: 0.5rem;
+  margin-right: 1rem; /* Space between the input field and the button */
+  flex: 1; /* Allows the input field to grow and fill available space */
+  max-width: 300px; /* Limits the width of the input field */
+  border: 1px solid #ddd; /* Light border for the input field */
+  border-radius: 5px; /* Rounded corners for the input field */
+}
+
+.profile-selection button {
+  padding: 0.5rem 1rem; /* Increases button padding for a better click area */
+  background-color: #4d008f; /* Retains the button color */
+  color: #fff; /* Keeps the text color white */
+  border: none; /* No border for a clean look */
+  border-radius: 5px; /* Rounded corners for buttons */
+  cursor: pointer; /* Adds a pointer cursor on hover */
+}
+
+.profile-selection button:hover {
+  background-color: #3a0060; /* Darker button color on hover */
+}
+
+.profile-selection ul {
+  list-style-type: none; /* Removes bullets from the list */
+  padding: 0; /* Removes default padding */
+}
+
+.profile-selection li {
+  margin-bottom: 1rem; /* Space between each profile item */
+  padding: 1rem; /* Adds padding inside each profile item */
+  border: 1px solid #ddd; /* Light border to distinguish items */
+  border-radius: 5px; /* Rounded corners for profile items */
+  background-color: rgba(246, 247, 249, 0.1); /* Retains background color for items */
+  display: flex;
+  justify-content: space-between; /* Aligns buttons to the right */
+  align-items: center; /* Vertically centers items */
+}
